@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}{{ user }}’s Statistics{% endblock %}
+
+{% block content %}
+<h1 class="gradient-text mb-0" style="padding-left: 10px;">Welcome to your states, {{ user }}!</h1>
+<div class="d-flex justify-content-center align-items-start" style="min-height: 80vh; padding: 2rem; max-height: 195vh; height: 195vh;">
+    
+  <div class="glass-card text-light" style="width: 95vw; max-width: 1400px; min-height: 55vh; padding: 3rem;">
+    <div class="row g-4" style="align-self: center;">
+    
+    <!-- Pie Chart -->
+    <div class="col-lg-6">
+      <!-- <h5 class="gradient-text mb-0 text-center" style="padding-bottom: 15px;">Prediction Frequency by Player</h5> -->
+      <div class="card bg-dark border-light h-100 p-3">
+        
+        <canvas id="playerPieChart" height="250"></canvas>
+      </div>
+    <!-- <h5 class="gradient-text mb-4 text-center" style="font-size: large; position: absolute;">Prediction Frequency by Player</h5>   -->
+    </div>
+    
+    <!-- Line Chart (Timeline) -->
+    <div class="col-lg-6">
+      <!-- <h5 class="gradient-text mb-0 text-center" style="padding-bottom: 15px;" >Predictions Over Time</h5> -->
+      <div class="card bg-dark border-light h-100 p-3">
+        
+        <canvas id="predictionTimelineChart" height="250"></canvas>
+      </div>
+    </div>
+    
+
+  </div>
+
+  </div>
+  <a href="{{ url_for('user', user=user) }}" class="btn btn-outline-light animate-bounce">⬅️ Back</a>
+</div>
+      
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // Data passed from Flask (render_template)
+  const pieData = {{ pie_data|tojson }};
+  const timelineLabels = {{ timeline_data.labels|tojson }};
+  const timelineCounts = {{ timeline_data.counts|tojson }};
+
+  // Pie Chart
+  const ctxPie = document.getElementById('playerPieChart').getContext('2d');
+  new Chart(ctxPie, {
+    type: 'pie',
+    data: {
+      labels: Object.keys(pieData),
+      datasets: [{
+        data: Object.values(pieData),
+        backgroundColor: ['#f39c12', '#3498db', '#9b59b6', '#1abc9c', '#e74c3c', '#2ecc71']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
+
+  // Timeline Chart
+  const ctxLine = document.getElementById('predictionTimelineChart').getContext('2d');
+  new Chart(ctxLine, {
+    type: 'line',
+    data: {
+      labels: timelineLabels,
+      datasets: [{
+        label: 'Predictions per Day',
+        data: timelineCounts,
+        fill: true,
+        borderColor: '#00aaff',
+        backgroundColor: 'rgba(0, 170, 255, 0.2)',
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true, ticks: { stepSize: 1 } }
+      }
+    }
+  });
+</script>
+
+{% endblock %}

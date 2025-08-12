@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Log In{% endblock %}
+{% block content %}
+ 
+<br>
+<div class="glass-card p-4 mx-auto" style="max-width: 400px;">
+  <!-- Login or Predict form -->
+  <h1>Log in to Your Account</h1>
+  <form class="login-form" action="{{ url_for('login') }}" method="POST">
+    <div class="form-row">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-row">
+      <label for="password">Password</label>
+      <input type="text" id="password" name="password" required>
+    </div>
+    <div class="form-row submit-row">
+      <input type="submit" value="Log In">
+    </div>
+  </form>
+
+  <!-- Sign Up instruction -->
+  <div class="mt-4 text-center">
+    <p>Don't have an account yet?</p>
+    <a href="{{ url_for('signup') }}">
+      <button type="button" class="btn btn-primary">Create a New Account</button>
+    </a>
+  </div>
+</div>
+{% endblock %}

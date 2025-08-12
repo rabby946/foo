@@ -1,0 +1,258 @@
+/* ————————————————————————
+   Global Reset & Body
+   ———————————————————————— */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0f6ab0;
+  color: #e0e0e0; /* default text for dark backgrounds */
+}
+
+/* ————————————————————————
+   Navbar
+   ———————————————————————— */
+.navbar {
+  background-color: #333 !important;
+  padding: 0.5rem 1rem;
+}
+.navbar-brand {
+  color: #ffd700 !important;
+  font-size: 1.25rem;
+}
+.navbar-nav .nav-link {
+  color: rgba(255,255,255,0.75) !important;
+  margin-right: 1rem;
+  font-size: 0.95rem;
+}
+.navbar-nav .nav-link:hover {
+  color: #ffd700 !important;
+}
+.navbar-nav .nav-link.active {
+  font-weight: bold;
+  border-bottom: 2px solid #ffd700;
+  background-color: rgba(170, 84, 4, 0.35);
+  border-radius: 5px;
+  color: white !important;
+}
+
+/* ————————————————————————
+   Header Titles
+   ———————————————————————— */
+h1.header-title {
+  text-align: center;
+  font-size: 3rem;
+  margin: 2rem 0;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #8aa9d2, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ————————————————————————
+   Glass-Card Container
+   ———————————————————————— */
+.glass-card {
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 24px rgba(194, 153, 153, 0.5);
+  padding: 2rem;
+}
+
+/* ————————————————————————
+   Form Page Titles
+   ———————————————————————— */
+.predict-container h1,
+.login-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  /* Gradient text */
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* ————————————————————————
+   Form Layout & Fields
+   ———————————————————————— */
+.predict-container,
+.login-container {
+  width: 90%;
+  max-width: 400px;
+  margin: 3rem auto;
+}
+
+.predict-form,
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.form-row label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #f0f0f0; /* lighter for visibility */
+}
+
+.form-row input,
+.form-row select {
+  padding: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: rgba(255,255,255,0.05);
+  color: #ffffff;
+}
+
+.submit-row {
+  margin-top: 1.5rem;
+}
+
+.submit-row input[type="submit"] {
+  background-color: #8a2be2;
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.submit-row input[type="submit"]:hover {
+  background-color: #6f1fa3;
+}
+
+/* ————————————————————————
+   Flash Messages
+   ———————————————————————— */
+.flash-message {
+  max-width: 400px;
+  margin: 1rem auto;
+  padding: 0.75rem;
+  background-color: #ffe5e5;
+  color: #c00;
+  border: 1px solid #c00;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* ————————————————————————
+   Animations
+   ———————————————————————— */
+/* Logo pop-in */
+.animate-logo {
+  width: 120px;
+  animation: logoPop 1s ease-out forwards;
+}
+@keyframes logoPop {
+  0%   { opacity: 0; transform: scale(0.5) translateY(-20px); }
+  60%  { opacity: 1; transform: scale(1.1) translateY(0); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* Fade-in text */
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+}
+.delay-1 { animation-delay: 0.5s; }
+.delay-2 { animation-delay: 1s; }
+.delay-3 { animation-delay: 1.5s; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Button bounce */
+.animate-bounce {
+  display: inline-block;
+  animation: bounceIn 1s ease-out both;
+}
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { opacity: 1; transform: scale(1.05); }
+  70%  { transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+/* Gradient text helper */
+/* .gradient-text {
+  font-size: 1.75rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+} */
+/* Gradient text helper */
+.gradient-text {
+  font-size: 2rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+
+/* ————————————————————————
+   Utility Overrides
+   ———————————————————————— */
+.bg-light {
+  background-color: inherit !important;
+}
+
+
+.select-dark option {
+  background-color: rgba(0, 0, 0, 0.9); /* Fallback: dark for dropdown list */
+  color: rgb(255, 255, 255);
+}
+
+/* ————————————————————————
+   Graphical-Views Card Styling
+   (match the welcome/dashboard glass-card)
+   ———————————————————————— */
+.stats-card {
+  /* reuse glass-card look */
+  @extend .glass-card;            /* if using a preprocessor; otherwise copy these: */
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 24px rgba(194, 153, 153, 0.5);
+  padding: 2rem;
+  margin-top: 2rem;               /* pull it up closer to the cards above */
+}
+
+/* ————————————————————————
+   Reduce gutter between row of cards
+   ———————————————————————— */
+.row.g-4 {
+  --bs-gutter-x: 1rem;   /* horizontal gap */
+  --bs-gutter-y: 1rem;   /* vertical gap */
+}
+
+/* ————————————————————————
+   Tighten spacing between dashboard sections
+   ———————————————————————— */
+.container .glass-card + .glass-card {
+  margin-top: 1.5rem;    /* if you have back-to-back cards, pull them closer */
+}

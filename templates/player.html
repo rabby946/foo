@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ player }}’s Prediction Profile{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh; padding: 2rem;">
+  <div class="glass-card text-center" style="width: 90%; max-width: 600px;">
+    
+    <!-- Success Banner -->
+    <h2 class="gradient-text mb-4">Successfully Predicted for {{ player }}</h2>
+    
+    <!-- Value Display -->
+    <p class="lead text-light mb-2">Estimated Market Value</p>
+    <h1 class="display-1 text-warning">
+      £{{vl}}<small class="fs-2"></small>
+    </h1>
+    <p class="text-muted">in British Pounds Sterling</p>
+    
+    <!-- Actions -->
+    <div class="mt-4">
+      <a href="{{ url_for('predict') }}" class="btn btn-info btn-lg me-2">
+        🔄 New Prediction
+      </a>
+      <a href="{{ url_for('profile') }}" class="btn btn-outline-light btn-lg">
+        🏠 Profile
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+<!-- predict.html -->
+{% extends "base.html" %}
+{% block title %}Predict Page{% endblock %}
+{% block content %}
+<br>
+<div class="glass-card p-4 mx-auto" style="max-width: 400px;">
+  <h1>Predict Your Market Value</h1>
+  <form class="predict-form" action="/predict" method="post">
+    <div class="form-row">
+      <label for="player_name">Player Name</label>
+      <input type="text" id="player_name" name="player_name" required>
+    </div>
+    <!-- <div class="form-row">
+      <label for="position" >Position</label>
+      <select id="position" name="position" class = "select-dark" required>
+        <option value="" ">Select Position</option>
+        <option value="GK" ">Goalkeeper</option>
+        <option value="DEF" ">Defender</option>
+        <option value="MID" ">Midfielder</option>
+        <option value="FWD" ">Forward</option>
+      </select>
+    </div> -->
+    <!-- <div class="form-row">
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" min="15" max="60" required>
+    </div> -->
+    <div class="form-row">
+      <label for="pace">Pace</label>
+      <input type="number" id="pace" name="pace" min="0" max="100" required>
+    </div>
+    <div class="form-row">
+      <label for="shooting">Shooting</label>
+      <input type="number" id="shooting" name="shooting" min="0" max="100" required>
+    </div>
+    <div class="form-row">
+      <label for="passing">Passing</label>
+      <input type="number" id="passing" name="passing" min="0" max="100" required>
+    </div>
+    <div class="form-row">
+      <label for="dribbling">Dribbling</label>
+      <input type="number" id="dribbling" name="dribbling" min="0" max="100" required>
+    </div>
+    <div class="form-row">
+      <label for="defending">Defending</label>
+      <input type="number" id="defending" name="defending" min="0" max="100" required>
+    </div>
+    <div class="form-row">
+      <label for="physicality">Physicality</label>
+      <input type="number" id="physicality" name="physicality" min="0" max="100" required>
+    </div>
+    <div class="form-row submit-row">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction History{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-3 px-2">
+  <div class="glass-card animate-fade-in delay-1" style="max-width: 100%; margin: auto;">
+    <h2 class="gradient-text mb-4 text-center" style="font-size: 1.5rem;">{{user.name}}'s Prediction History</h2>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-2">
+      <h2 class="gradient-text mb-4 text-center" style="font-size: 1.2rem;">📜 Prediction History Table</h2>
+      <form action="/history" method="post" class="d-flex align-items-center mb-2 mb-md-0">
+        <label for="sortOrder" class="me-2 mb-0">Sort:</label>
+        <select name="action" id="sortOrder" class="form-select me-2" style="width: 140px;" onchange="this.form.submit()">
+          <option value="Descending" {% if request.form.get('action') == 'Descending' %}selected{% endif %}>Oldest First</option>
+          <option value="Ascending" {% if request.form.get('action') == 'Ascending' %}selected{% endif %}>Newest First</option>
+        </select>
+        <a href="{{ url_for('profile') }}" class="btn btn-outline-light btn-lg ms-2">
+          🏠 Profile
+        </a>
+      </form>
+    </div>
+    {% if history %}
+      <div class="table-responsive" style="overflow-x:auto;">
+        <table class="table table-dark table-striped table-bordered align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Timestamp</th>
+              <th scope="col">Player Name</th>
+              <th scope="col">Predicted Value</th>
+              
+              <th scope="col">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for h in history %}
+              <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td scope="row">{{ h.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ h.player_name }}</td>
+                <td>{{ h.predicted_value }}</td>
+                
+                <td>
+                  <a href="{{ url_for('player', player=h.player_name, vl=h.predicted_value) }}">here</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-center text-muted">No predictions made yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+@media (max-width: 576px) {
+  .glass-card {
+    padding: 0.5rem !important;
+    font-size: 0.95rem;
+  }
+  .table th, .table td {
+    font-size: 0.85rem;
+    padding: 0.3rem;
+  }
+  .btn-lg {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+  .gradient-text {
+    font-size: 1rem !important;
+  }
+}
+</style>
+
+{% endblock %}

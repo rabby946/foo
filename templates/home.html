@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh; padding: 2rem;">
+  <div class="glass-card text-center" style="width: 90vw; max-width: 1200px; min-height: 70vh;">
+    <!-- Logo -->
+    <img src="{{ url_for('static', filename='images/logo.png') }}"
+         alt="Site Logo"
+         class="logo mb-4 animate-logo"
+         style="width: 120px;">
+
+    <!-- Animated Heading -->
+    <h1 class="display-4 text-light mb-4 animate-fade-in">Welcome to the Football Player Market Value Predictor</h1>
+
+    <p class="lead text-light animate-fade-in delay-1">
+      Analyse and predict the estimated market value of football players using intelligent insights and data.
+    </p>
+
+    <hr class="border-light">
+
+    <p class="text-light animate-fade-in delay-2">
+      Get started by exploring the prediction tool or log in to manage your account.
+    </p>
+
+    <a class="btn btn-warning btn-lg mt-4 animate-bounce delay-3"
+       href="{{ url_for('predict') }}" role="button">
+      Try Prediction&nbsp;<i class="bi bi-arrow-right-circle"></i>
+    </a>
+  </div>
+</div>
+{% endblock %}

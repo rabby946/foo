@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+  
+<br>
+<div class="glass-card p-4 mx-auto" style="max-width: 400px;">
+  <!-- Sign up form -->
+  <h1>Sign up for a New Account</h1>
+  <form class="login-form" action="/signup" method="post">
+    <div class="form-row">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter a unique username" required>
+    </div>
+    <div class="form-row">
+      <label for="password">Password</label>
+      <input type="text" id="password" name="password" placeholder="Set your own password" required>
+    </div>
+    <div class="form-row submit-row">
+      <input type="submit" value="Sign Up">
+    </div>
+  </form>
+
+  <!-- Already have account -->
+  <div class="mt-4 text-center">
+    <p>Already have an account?</p>
+    <a href="{{ url_for('login') }}">
+      <button type="button" class="btn btn-secondary">Log in</button>
+    </a>
+  </div>
+</div>
+{% endblock %}
