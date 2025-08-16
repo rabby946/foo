@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
@@ -11,6 +12,9 @@ from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 import numpy as np
 import uuid
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 class AgeWeighter(BaseEstimator, TransformerMixin):
     def __init__(self, weight=1.5):
         self.weight = weight
@@ -31,13 +35,16 @@ import numpy as np
 
 
 app = Flask(__name__)
-app.secret_key = "key"
+app.secret_key = os.environ.get("SECRET_KEY", "fallback_secret")
+
 app.permanent_session_lifetime = timedelta(minutes=30)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:s118044@localhost:5432/highschool'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 pipeline = joblib.load('ml_model/player_value_pipeline.pkl')
 # pipeline = joblib.load('ml_model/player_value_pipeline.pkl')
-
+guest = {"guest":False}
 db = SQLAlchemy(app)
 
 class PredictionHistory(db.Model):
@@ -61,7 +68,7 @@ class User(db.Model):
 
     def __init__(self, name, password):
         self.name = name
-        self.password = password  # Hash password
+        self.password = generate_password_hash(password)
 
     @staticmethod
     def add_user(name, password):
@@ -82,14 +89,14 @@ class User(db.Model):
         user = User.query.filter_by(name=name).first()
         if user:
             user.predicted_player = new_player
-            db.session.commit()
+            # db.session.commit()
             user.predicted_value = new_value
-            db.session.commit()
+            # db.session.commit()
             if user.predicted_count is None:
                 user.predicted_count = 1
             else:
                 user.predicted_count += 1
-            db.session.commit()
+            # db.session.commit()
             history = PredictionHistory(player_name=new_player, predicted_value=new_value, user_id=user.id)
             db.session.add(history)
             db.session.commit()
@@ -133,9 +140,10 @@ def login():
         password = request.form.get("password")
         user = User.get_user(name)
         if user:
-            if user.password != password:
+            if not check_password_hash(user.password, password):
                 flash("Invalid password")
                 return render_template("login.html")
+
             session["user"] = name
             return redirect(url_for("user", user=name))
         flash("User not found")
@@ -143,6 +151,7 @@ def login():
     return render_template("login.html")
 @app.route("/demologin")
 def demologin():
+    guest["guest"] = True
     the_user = f"GuestUser_{uuid.uuid4().hex[:4]}"  # e.g., GuestUsera3f9b2
     User.add_user(the_user, the_user + the_user)
     session["user"] = the_user
@@ -172,19 +181,14 @@ def profile():
 
 @app.route("/logout")
 def logout():
+    if guest["guest"]:
+        return redirect(url_for("delete_account"))
     if "user" in session:
         session.pop("user", None)
         flash("Session logged out")
     else: 
         flash(f"already logged out !")
     return redirect(url_for("login"))
-
-# @app.route("/run")
-# def run():
-#     sum = 0
-#     for i in range(10000):
-#         sum += i
-#     return
 
 @app.route("/player/<player>/<vl>")
 def player(player, vl):
@@ -195,7 +199,7 @@ def delete_account():
     if "user" not in session:
         flash("You must be logged in to delete your account.")
         return redirect(url_for("login"))
-    
+    guest["guest"] = False
     user = User.get_user(session["user"])
     if user:
         db.session.delete(user)
@@ -255,15 +259,16 @@ def history():
     if not user:
         flash("User not found")
         return redirect(url_for("login"))
-    history  = user.history
-    history.reverse()
-    if request.method == "POST":
-        # Type = request.form.get("position")
-        action = request.form.get("action")
-        if action  != "Ascending":
-            history.reverse()
-        # return render_template("history.html", user=user, history=history)
-    return render_template("history.html", user=user, history=history)
+    # history  = user.history
+    history_list = list(user.history)
+    sort_order = request.form.get("action", "Descending")
+    if sort_order == "Ascending":
+        history_list.sort(key=lambda h: h.id)
+    else:
+        history_list.sort(key=lambda h: h.id, reverse=True)
+
+    return render_template("history.html", user=user, history=history_list, sort=sort_order)
+
 
 @app.route("/statistics")
 def statistics():
