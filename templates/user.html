@@ -8,8 +8,11 @@
     <!-- Header Row -->
     <div class="d-flex justify-content-between align-items-center mb-4 animate-fade-in">
       <h1 class="gradient-text mb-0">Welcome, {{ user }}!</h1>
-      <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-lg">
-        🔒 Log Out
+      <a href="{{ url_for('delete_account') }}" class="btn btn-outline-light btn-lg">
+        
+        <b>
+              🛑<span style="color: red;"> Delete Account</span>
+            </b>
       </a>
     </div>
     <p class="text-light mb-5 animate-fade-in delay-1">
@@ -31,9 +34,9 @@
           <a href="{{ url_for('statistics') }}" class="list-group-item list-group-item-action bg-dark text-light">
             📊 My Statistics
           </a>
-          <a href="{{ url_for('delete_account') }}" class="list-group-item list-group-item-action bg-dark text-light">
+          <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action bg-dark text-light">
             <b>
-              🛑<span style="color: red;"> Delete Account</span>
+              🔒 Log Out
             </b>
           </a>
         </div>
@@ -47,7 +50,7 @@
             <div class="card bg-secondary border-light h-100">
               <div class="card-body">
                 <h5 class="card-title">Last Prediction</h5>
-                <p class="card-text">Player: {{player_name if player_name else  "No prediction yet"}}<br>Value: £ {{player_value if player_value else "-" }} </p>
+                <p class="card-text">Player: {{player_name if player_name else  "No prediction yet"}}<br>Value: £ {{player_value if player_value else "N/A" }} </p>
               </div>
             </div>
           </div>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %} Live & Upcoming Matches {% endblock %}
+
+{% block content %}
+<div class="container live-matches-container">
+
+    <h1 class="header-title animate-fade-in">Live & Upcoming Matches</h1>
+    
+    <div class="row g-4 justify-content-center">
+
+        <div class="col-12 col-md-6 col-lg-4 d-flex">
+            <div class="match-card live animate-fade-in delay-1">
+                <div class="match-header">
+                    <span class="competition">Laliga</span>
+                    <span class="match-status">LIVE</span>
+                </div>
+                <div class="match-body">
+                    <div class="team">
+                        <!-- <img src="https://i.pinimg.com/474x/d3/b6/a8/d3b6a83cbdf24b57515cc2fa9b5a38aa.jpg" alt="Liverpool Logo"> -->
+                        <h4>Mallorca </h4>
+                    </div>
+                    <div class="match-info">
+                        <h4>  0-0 </h4>
+                        <span>0'</span>
+                    </div>
+                    <div class="team">
+                        <!-- <img src="https://images.seeklogo.com/logo-png/51/2/afc-bournemouth-logo-png_seeklogo-515831.png" alt="Chelsea Logo"> -->
+                        <h4> Barcelona</h4>
+                    </div>
+                </div>
+                <div class="match-footer">
+                    <a href="{{ url_for('livematch') }}" class="btn-watch-now">Watch Now</a>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+</div>
+
+{% endblock %}

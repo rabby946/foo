@@ -6,17 +6,20 @@
 
 <div class="container-fluid mt-3 px-2">
   <div class="glass-card animate-fade-in delay-1" style="max-width: 100%; margin: auto;">
-    <h2 class="gradient-text mb-4 text-center" style="font-size: 1.5rem;">{{user.name}}'s Prediction History</h2>
+    <h1 class="gradient-text mb-4 text-center" style="font-size: 2.5rem;">{{user.name}}'s Prediction History</h1>
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-2">
       <h2 class="gradient-text mb-4 text-center" style="font-size: 1.2rem;">📜 Prediction History Table</h2>
       <form action="/history" method="post" class="d-flex align-items-center mb-2 mb-md-0">
         <label for="sortOrder" class="me-2 mb-0">Sort:</label>
         <select name="action" id="sortOrder" class="form-select me-2" style="width: 140px;" onchange="this.form.submit()">
-          <option value="Descending" {% if request.form.get('action') == 'Descending' %}selected{% endif %}>Oldest First</option>
           <option value="Ascending" {% if request.form.get('action') == 'Ascending' %}selected{% endif %}>Newest First</option>
+          <option value="Descending" {% if request.form.get('action') == 'Descending' %}selected{% endif %}>Oldest First</option>
         </select>
+        <a href="{{ url_for('download_pdf') }}" class="btn btn-outline-light btn-lg ms-2">
+          <img src="{{ url_for('static', filename='images/download.png') }}" alt="download_pdf" style="max-height: 40px;">
+        </a>                  
         <a href="{{ url_for('profile') }}" class="btn btn-outline-light btn-lg ms-2">
-          🏠 Profile
+          <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" style="width: 40px;">
         </a>
       </form>
     </div>

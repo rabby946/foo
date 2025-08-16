@@ -19,7 +19,12 @@
       <input type="submit" value="Log In">
     </div>
   </form>
+  <!-- <div class="mt-4 text-center"> -->
+    <a href="{{ url_for('demologin') }}" style="text-align: center; padding-left: 35%;">
+      <button type="button" class="btn btn-secondary" style="text-align: center;">Guest Login</button>
+    </a>
 
+  <div>
   <!-- Sign Up instruction -->
   <div class="mt-4 text-center">
     <p>Don't have an account yet?</p>
@@ -28,4 +33,6 @@
     </a>
   </div>
 </div>
+</div>
+
 {% endblock %}

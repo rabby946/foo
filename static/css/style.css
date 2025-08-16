@@ -256,3 +256,144 @@ h1.header-title {
 .container .glass-card + .glass-card {
   margin-top: 1.5rem;    /* if you have back-to-back cards, pull them closer */
 }
+/* ————————————————————————
+   Live Matches Page
+   ———————————————————————— */
+.live-matches-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.match-card {
+    /* Extending the .glass-card look for consistency */
+    background: rgba(25, 25, 25, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    
+    border-radius: 15px;
+    color: #ffffff;
+    overflow: hidden; /* Important for keeping child elements within the border radius */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; /* Make cards in the same row equal height */
+}
+
+.match-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px 0 rgba(255, 215, 0, 0.2); /* Gold shadow on hover */
+}
+
+/* Card Header: Competition & Status */
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background: rgba(40, 40, 40, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.match-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/* Status Indicator Colors */
+.match-card.live .match-status {
+    background-color: #e74c3c; /* Red for LIVE */
+    animation: pulse 1.5s infinite;
+}
+
+.match-card.upcoming .match-status {
+    background-color: #3498db; /* Blue for UPCOMING */
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+    }
+}
+
+
+/* Card Body: Teams & Score/Time */
+.match-body {
+    flex-grow: 1; /* Allows the body to fill available space */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.team {
+    width: 35%;
+}
+
+.team img {
+    max-width: 60px;
+    margin-bottom: 0.5rem;
+}
+
+.team h4 {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.match-info {
+    font-weight: bold;
+}
+
+.match-info h2 { /* For live score */
+    font-size: 2.5rem;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.match-info span { /* For match minute */
+    font-size: 0.9rem;
+    color: #ffd700; /* Use accent color */
+}
+
+.match-info h3 { /* For upcoming time */
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.match-info p { /* For upcoming date */
+    margin: 0;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+
+/* Card Footer: Watch Button */
+.match-footer .btn-watch-now {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    background: linear-gradient(90deg, #8a2be2, #6f1fa3); /* Purple gradient from your theme */
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.match-footer .btn-watch-now:hover {
+    background: linear-gradient(90deg, #6f1fa3, #8a2be2); /* Reversed gradient on hover */
+}

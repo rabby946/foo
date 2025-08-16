@@ -10,7 +10,7 @@ from sqlalchemy import func
 from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 import numpy as np
-
+import uuid
 class AgeWeighter(BaseEstimator, TransformerMixin):
     def __init__(self, weight=1.5):
         self.weight = weight
@@ -77,8 +77,6 @@ class User(db.Model):
     def get_user(name):
         return User.query.filter_by(name=name).first()
 
-
-
     @staticmethod
     def update_prediction(name, new_player, new_value):
         user = User.query.filter_by(name=name).first()
@@ -101,6 +99,13 @@ class User(db.Model):
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route("/live")
+def live():
+    return render_template("live.html")
+@app.route("/livematch")
+def livematch():
+    return render_template("livematch.html")
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
@@ -136,23 +141,35 @@ def login():
         flash("User not found")
         return render_template("login.html")
     return render_template("login.html")
+@app.route("/demologin")
+def demologin():
+    the_user = f"GuestUser_{uuid.uuid4().hex[:4]}"  # e.g., GuestUsera3f9b2
+    User.add_user(the_user, the_user + the_user)
+    session["user"] = the_user
+    return redirect(url_for("user", user=the_user))
 
 @app.route("/<user>")
 def user(user):
+    # if 
     if "user" not in session:
         flash("Session timeout!")
         return redirect(url_for("login"))
+    if user != session["user"]:
+        flash(f"user not found")
+        return redirect(url_for("home"))
     user_obj = User.get_user(user)
     if not user_obj:
         return redirect(url_for("login"))
     return render_template("user.html",user=user,player_name=user_obj.predicted_player if user_obj else None,
                            player_value=user_obj.predicted_value if user_obj else None,count=user_obj.predicted_count)
+
 @app.route("/profile")
 def profile():
     if "user" not in session:
         flash("Session timeout!")
         return redirect(url_for("login"))
     return redirect(url_for("user", user=session["user"]))
+
 @app.route("/logout")
 def logout():
     if "user" in session:
@@ -162,9 +179,17 @@ def logout():
         flash(f"already logged out !")
     return redirect(url_for("login"))
 
+# @app.route("/run")
+# def run():
+#     sum = 0
+#     for i in range(10000):
+#         sum += i
+#     return
+
 @app.route("/player/<player>/<vl>")
 def player(player, vl):
     return render_template("player.html", player=player, vl=vl)
+
 @app.route("/delete_account", methods=["POST", "GET"])
 def delete_account():
     if "user" not in session:
@@ -289,7 +314,12 @@ def download_pdf():
     response.headers['Content-Disposition'] = f'attachment; filename={user.name}_prediction_history.pdf'
     return response
 
+
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5001)
+    # app.run(debug=True, port=5001)
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
