@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: football-predict
+    env: python
+    plan: free  # change to starter/pro for more power
+    region: frankfurt  # or oregon/dublin depending on closest
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers=4 --threads=2 --timeout=120
+    envVars:
+      - key: DATABASE_URL
+        sync: false  # Render will inject your Postgres URL here
+      - key: SECRET_KEY
+        generateValue: true  # auto-generate if not provided
+    autoDeploy: true
+
+databases:
+  - name: football-predict-db
+    plan: free
+    region: frankfurt
