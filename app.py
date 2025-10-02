@@ -39,7 +39,7 @@ app.secret_key = os.environ.get("SECRET_KEY", "fallback_secret")
 
 app.permanent_session_lifetime = timedelta(minutes=30)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres.vcunzxmtzlkfwztrbdfi:football@aws-1-us-east-2.pooler.supabase.com:6543/postgres"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 pipeline = joblib.load('ml_model/player_value_pipeline.pkl')
